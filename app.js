@@ -11,20 +11,64 @@ const fetchData=async (searchTerm)=>{
     return response.data.Search;
 };
 
-const input=document.querySelector('input');
+createAutoComplete({
+    root:document.querySelector('.autocomplete')
 
-const onInput= async event=>{
-   const movies = await fetchData(event.target.value);
-   
-   for(let movie of movies){
-   const div=document.createElement('div');
-    div.innerHTML=`     <img src= "${movie.Poster}" />
-    <h1>${movie.Title}</h1>
-     `;
 
-    document.querySelector('#target').appendChild(div);
+});
+createAutoComplete({
+    root:document.querySelector('.autocomplete-two')
 
-}
+
+});
+createAutoComplete({
+    root:document.querySelector('.autocomplete-three')
+
+
+});
+
+
+
+const movieTemplate=(movieDetails)=>{
+     
+    return `
+    <article class="media">
+    <figure class="media-left">
+    <p class="image">
+    
+    <img src="${movieDetails.Poster}"/>
+    
+    </p>
+    
+    </figure>
+    <div class="media-content">
+    <div class="content">
+    <h1>${movieDetails.Title}</h1>
+    <h4>${movieDetails.Genre}</h4>
+    <p>${movieDetails.Plot}</p>
+    
+    </div>
+    </div>
+    </article>
+    <article class="notification is-primary">
+    <p class="title">${movieDetails.Awards}</p>
+    <p class="subtitl">Awards</p>
+    </article>
+    <article class="notification is-primary">
+    <p class="title">${movieDetails.BoxOffice}</p>
+    <p class="subtitl">BoxOffice</p>
+    </article>
+    <article class="notification is-primary">
+    <p class="title">${movieDetails.Metascore}</p>
+    <p class="subtitl">MetaScore</p>
+    </article>
+    <article class="notification is-primary">
+    <p class="title">${movieDetails.imdbRating}</p>
+    <p class="subtitl">Imdb Rating</p>
+    </article>
+    <article class="notification is-primary">
+    <p class="title">${movieDetails.imdbVotes}</p>
+    <p class="subtitl">Imdb Votes</p>
+    </article>
+    `
 };
-
-input.addEventListener('input',debounce(onInput,900));
